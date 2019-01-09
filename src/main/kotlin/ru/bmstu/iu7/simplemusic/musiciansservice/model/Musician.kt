@@ -63,7 +63,11 @@ class MusicianSerializer @JvmOverloads constructor(t: Class<Musician>? = null) :
         jgen.writeStringField("email", value.email)
         jgen.writeStringField("firstName", value.firstName)
         jgen.writeStringField("lastName", value.lastName)
-        jgen.writeStringField("dateOfBirth", this.objectMapper.writeValueAsString(value.dateOfBirth))
+        if (value.dateOfBirth != null) {
+            jgen.writeStringField("dateOfBirth", this.objectMapper.writeValueAsString(value.dateOfBirth))
+        } else {
+            jgen.writeNullField("dateOfBirth")
+        }
         jgen.writeEndObject()
     }
 }

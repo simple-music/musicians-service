@@ -10,7 +10,8 @@ import ru.bmstu.iu7.simplemusic.musiciansservice.model.MusicianUpdate
 import ru.bmstu.iu7.simplemusic.musiciansservice.model.NewMusician
 import ru.bmstu.iu7.simplemusic.musiciansservice.service.MusicianService
 
-@RestController("/musicians")
+@RestController
+@RequestMapping("/musicians")
 class MusicianController(@Autowired private val musicianService: MusicianService) {
 
     @PostMapping
