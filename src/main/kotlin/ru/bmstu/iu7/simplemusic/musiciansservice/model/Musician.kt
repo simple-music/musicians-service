@@ -47,7 +47,6 @@ data class MusicianUpdate(
 )
 
 class MusicianSerializer @JvmOverloads constructor(t: Class<Musician>? = null) : StdSerializer<Musician>(t) {
-
     private val objectMapper: ObjectMapper = ObjectMapper()
 
     init {

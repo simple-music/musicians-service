@@ -12,7 +12,6 @@ import ru.bmstu.iu7.simplemusic.musiciansservice.repository.MusicianRepository
 
 @Service
 class MusicianServiceImpl(@Autowired private val musicianRepository: MusicianRepository) : MusicianService {
-
     override fun addMusician(newMusician: NewMusician): Musician {
         var musician = Musician(
                 nickname = newMusician.nickname,
@@ -74,13 +73,17 @@ class MusicianServiceImpl(@Autowired private val musicianRepository: MusicianRep
         return if (modified) musician else null
     }
 
-    override fun deleteMusician(musicianId: String) {
+    override fun deleteMusician(musicianId: String, permanently: Boolean) {
         val musician = this.musicianRepository
                 .findByIdAndActiveIsTrue(musicianId)
                 .orElseThrow {
                     NotFoundException("musician not found")
                 }
-        musician.active = false
-        this.musicianRepository.save(musician)
+        if (permanently) {
+            musician.active = false
+            this.musicianRepository.save(musician)
+        } else {
+            this.musicianRepository.delete(musician)
+        }
     }
 }

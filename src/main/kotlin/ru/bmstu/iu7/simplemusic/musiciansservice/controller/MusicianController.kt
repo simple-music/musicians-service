@@ -13,7 +13,6 @@ import ru.bmstu.iu7.simplemusic.musiciansservice.service.MusicianService
 @RestController
 @RequestMapping("/musicians")
 class MusicianController(@Autowired private val musicianService: MusicianService) {
-
     @PostMapping
     fun addMusician(@RequestBody newMusician: NewMusician): ResponseEntity<Musician> {
         val musician = this.musicianService.addMusician(newMusician)
@@ -41,8 +40,10 @@ class MusicianController(@Autowired private val musicianService: MusicianService
     }
 
     @DeleteMapping("/{id}")
-    fun deleteMusician(@PathVariable("id") musicianId: String): ResponseEntity<Musician> {
-        this.musicianService.deleteMusician(musicianId)
+    fun deleteMusician(@PathVariable("id") musicianId: String,
+                       @RequestParam("permanently", required = false,
+                               defaultValue = "false") permanently: Boolean): ResponseEntity<Musician> {
+        this.musicianService.deleteMusician(musicianId, permanently)
         return ResponseEntity.noContent().build()
     }
 }
