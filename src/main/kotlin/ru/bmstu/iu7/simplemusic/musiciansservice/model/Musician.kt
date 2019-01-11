@@ -2,18 +2,14 @@ package ru.bmstu.iu7.simplemusic.musiciansservice.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.databind.util.StdDateFormat
-import lombok.Data
 import ru.bmstu.iu7.simplemusic.musiciansservice.domain.Musician
-import java.io.IOException
 import java.util.*
 
-@Data
 data class NewMusician(
         @JsonProperty(value = "nickname", required = true)
         val nickname: String,
@@ -31,7 +27,6 @@ data class NewMusician(
         val dateOfBirth: Date? = null
 )
 
-@Data
 data class MusicianUpdate(
         @JsonProperty(value = "email", required = false)
         val email: String? = null,
@@ -54,7 +49,6 @@ class MusicianSerializer @JvmOverloads constructor(t: Class<Musician>? = null) :
         this.objectMapper.dateFormat = StdDateFormat().withColonInTimeZone(true)
     }
 
-    @Throws(IOException::class, JsonProcessingException::class)
     override fun serialize(value: Musician, jgen: JsonGenerator, provider: SerializerProvider) {
         jgen.writeStartObject()
         jgen.writeStringField("id", value.id)
@@ -63,7 +57,9 @@ class MusicianSerializer @JvmOverloads constructor(t: Class<Musician>? = null) :
         jgen.writeStringField("firstName", value.firstName)
         jgen.writeStringField("lastName", value.lastName)
         if (value.dateOfBirth != null) {
-            jgen.writeStringField("dateOfBirth", this.objectMapper.writeValueAsString(value.dateOfBirth))
+            jgen.writeStringField("dateOfBirth",
+                    this.objectMapper.writeValueAsString(value.dateOfBirth)
+            )
         } else {
             jgen.writeNullField("dateOfBirth")
         }
