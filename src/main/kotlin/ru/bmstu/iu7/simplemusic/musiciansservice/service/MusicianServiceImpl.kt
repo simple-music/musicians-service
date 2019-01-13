@@ -55,8 +55,13 @@ class MusicianServiceImpl(@Autowired private val musicianRepository: MusicianRep
             musician.fullName = musicianUpdate.fullName
             modified = true
         }
-        if (musician.dateOfBirth != musicianUpdate.dateOfBirth) {
+        if ((musician.dateOfBirth == null && musicianUpdate.dateOfBirth != null) ||
+                (musicianUpdate.dateOfBirth != null && musician.dateOfBirth != musicianUpdate.dateOfBirth)) {
             musician.dateOfBirth = musicianUpdate.dateOfBirth
+            modified = true
+        }
+        if (musicianUpdate.musicalInstruments != null) {
+            musician.musicalInstruments = musicianUpdate.musicalInstruments
             modified = true
         }
 

@@ -20,7 +20,7 @@ data class NewMusician(
         val dateOfBirth: Date? = null,
 
         @JsonProperty(value = "musicalInstruments", required = false)
-        val musicalInstruments: Set<String>? = null
+        val musicalInstruments: Set<String> = emptySet()
 )
 
 data class MusicianUpdate(

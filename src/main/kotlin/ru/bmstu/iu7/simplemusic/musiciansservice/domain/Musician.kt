@@ -32,7 +32,8 @@ data class Musician(
         var dateOfBirth: Date? = null,
 
 
-        var musicalInstruments: Set<String>? = null,
+        @JsonProperty(value = "musicalInstruments")
+        var musicalInstruments: Set<String> = emptySet(),
 
         @JsonIgnore
         var active: Boolean = true
