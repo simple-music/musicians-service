@@ -130,8 +130,7 @@ class MusicianControllerTests {
         return NewMusician(
                 nickname = this.generateNickname(id),
                 email = this.generateEmail(id),
-                firstName = this.generateFirstName(id),
-                lastName = this.generateLastName(id)
+                fullName = this.generateFullName(id)
         )
     }
 
@@ -140,8 +139,7 @@ class MusicianControllerTests {
                 id = id,
                 nickname = this.generateNickname(id),
                 email = this.generateEmail(id),
-                firstName = this.generateFirstName(id),
-                lastName = this.generateLastName(id)
+                fullName = this.generateFullName(id)
         )
     }
 
@@ -163,12 +161,8 @@ class MusicianControllerTests {
         return "musician$id@example.com"
     }
 
-    private fun generateFirstName(id: String = this.generateId()): String {
+    private fun generateFullName(id: String = this.generateId()): String {
         return "FirstName$id"
-    }
-
-    private fun generateLastName(id: String = this.generateId()): String {
-        return "LastName$id"
     }
 
     private fun <T> any(): T {

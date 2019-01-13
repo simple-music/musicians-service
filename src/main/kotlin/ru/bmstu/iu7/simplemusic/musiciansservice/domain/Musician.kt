@@ -1,29 +1,39 @@
 package ru.bmstu.iu7.simplemusic.musiciansservice.domain
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
-import ru.bmstu.iu7.simplemusic.musiciansservice.model.MusicianSerializer
+import ru.bmstu.iu7.simplemusic.musiciansservice.constant.Format
 import java.util.*
 
 
 @Document
-@JsonSerialize(using = MusicianSerializer::class)
 data class Musician(
         @Id
+        @JsonProperty(value = "id")
         var id: String? = null,
 
         @Indexed(unique = true)
+        @JsonProperty(value = "nickname")
         var nickname: String,
 
         @Indexed(unique = true)
+        @JsonProperty(value = "email")
         var email: String,
 
-        var firstName: String,
-        var lastName: String,
+        @JsonProperty(value = "fullName")
+        var fullName: String,
 
+        @JsonProperty(value = "dateOfBirth")
+        @JsonFormat(pattern = Format.DATE)
         var dateOfBirth: Date? = null,
 
+
+        var musicalInstruments: Set<String>? = null,
+
+        @JsonIgnore
         var active: Boolean = true
 )

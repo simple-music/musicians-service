@@ -16,9 +16,9 @@ class MusicianServiceImpl(@Autowired private val musicianRepository: MusicianRep
         var musician = Musician(
                 nickname = newMusician.nickname,
                 email = newMusician.email,
-                firstName = newMusician.firstName,
-                lastName = newMusician.lastName,
-                dateOfBirth = newMusician.dateOfBirth
+                fullName = newMusician.fullName,
+                dateOfBirth = newMusician.dateOfBirth,
+                musicalInstruments = newMusician.musicalInstruments
         )
 
         try {
@@ -51,12 +51,8 @@ class MusicianServiceImpl(@Autowired private val musicianRepository: MusicianRep
             musician.email = musicianUpdate.email
             modified = true
         }
-        if (musicianUpdate.firstName != null && musician.firstName != musicianUpdate.firstName) {
-            musician.firstName = musicianUpdate.firstName
-            modified = true
-        }
-        if (musicianUpdate.lastName != null && musician.lastName != musicianUpdate.lastName) {
-            musician.lastName = musicianUpdate.lastName
+        if (musicianUpdate.fullName != null && musician.fullName != musicianUpdate.fullName) {
+            musician.fullName = musicianUpdate.fullName
             modified = true
         }
         if (musician.dateOfBirth != musicianUpdate.dateOfBirth) {
