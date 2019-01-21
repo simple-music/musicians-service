@@ -30,6 +30,14 @@ class MusicianServiceImpl(@Autowired private val musicianRepository: MusicianRep
         return musician
     }
 
+    override fun findMusician(nickname: String): Musician {
+        return musicianRepository
+                .findByNicknameAndActiveIsTrue(nickname)
+                .orElseThrow {
+                    NotFoundException("musician not found")
+                }
+    }
+
     override fun getMusician(musicianId: String): Musician {
         return musicianRepository
                 .findByIdAndActiveIsTrue(musicianId)

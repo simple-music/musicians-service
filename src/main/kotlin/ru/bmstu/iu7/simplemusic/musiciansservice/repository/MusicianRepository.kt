@@ -6,4 +6,5 @@ import java.util.*
 
 interface MusicianRepository : MongoRepository<Musician, String> {
     fun findByIdAndActiveIsTrue(id: String): Optional<Musician>
+    fun findByNicknameAndActiveIsTrue(nickname: String): Optional<Musician>
 }

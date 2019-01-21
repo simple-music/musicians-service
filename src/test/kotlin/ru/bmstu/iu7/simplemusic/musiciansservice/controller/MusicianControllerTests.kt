@@ -52,6 +52,26 @@ class MusicianControllerTests {
     }
 
     @Test
+    fun findProfile() {
+        val nickname = this.generateNickname()
+
+        val musician = this.generateMusician()
+        val musicianStr = this.mapObject(musician)
+
+        Mockito
+                .`when`(this.mockService!!.findMusician(nickname))
+                .thenReturn(musician)
+
+        this.mockMvc!!
+                .perform(MockMvcRequestBuilders
+                        .get("/musicians?nickname=$nickname"))
+                .andExpect(MockMvcResultMatchers
+                        .status().isOk)
+                .andExpect(MockMvcResultMatchers
+                        .content().string(musicianStr))
+    }
+
+    @Test
     fun getProfile() {
         val id = this.generateId()
 

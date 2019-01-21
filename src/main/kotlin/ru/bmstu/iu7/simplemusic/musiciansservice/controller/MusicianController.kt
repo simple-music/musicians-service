@@ -11,7 +11,7 @@ import ru.bmstu.iu7.simplemusic.musiciansservice.model.NewMusician
 import ru.bmstu.iu7.simplemusic.musiciansservice.service.MusicianService
 
 @RestController
-@RequestMapping("/musicians")
+@RequestMapping(value = ["/musicians"])
 class MusicianController(@Autowired private val musicianService: MusicianService) {
     @PostMapping
     fun addMusician(@RequestBody newMusician: NewMusician): ResponseEntity<Musician> {
@@ -22,14 +22,21 @@ class MusicianController(@Autowired private val musicianService: MusicianService
         return ResponseEntity.created(uri).body(musician)
     }
 
-    @GetMapping("/{id}")
-    fun getMusician(@PathVariable("id") musicianId: String): ResponseEntity<Musician> {
+    @GetMapping
+    fun findMusician(@RequestParam(value = "nickname",
+            required = true) nickname: String): ResponseEntity<Musician> {
+        val musician = this.musicianService.findMusician(nickname)
+        return ResponseEntity.ok(musician)
+    }
+
+    @GetMapping(value = ["/{id}"])
+    fun getMusician(@PathVariable(value = "id") musicianId: String): ResponseEntity<Musician> {
         val musician = this.musicianService.getMusician(musicianId)
         return ResponseEntity.ok(musician)
     }
 
-    @PatchMapping("/{id}")
-    fun updateMusician(@PathVariable("id") musicianId: String,
+    @PatchMapping(value = ["/{id}"])
+    fun updateMusician(@PathVariable(value = "id") musicianId: String,
                        @RequestBody musicianUpdate: MusicianUpdate): ResponseEntity<Musician> {
         val musician = this.musicianService.updateMusician(musicianId, musicianUpdate)
         return if (musician == null) {
@@ -39,9 +46,9 @@ class MusicianController(@Autowired private val musicianService: MusicianService
         }
     }
 
-    @DeleteMapping("/{id}")
-    fun deleteMusician(@PathVariable("id") musicianId: String,
-                       @RequestParam("permanently", required = false,
+    @DeleteMapping(value = ["/{id}"])
+    fun deleteMusician(@PathVariable(value = "id") musicianId: String,
+                       @RequestParam(value = "permanently", required = false,
                                defaultValue = "false") permanently: Boolean): ResponseEntity<Musician> {
         this.musicianService.deleteMusician(musicianId, permanently)
         return ResponseEntity.noContent().build()
