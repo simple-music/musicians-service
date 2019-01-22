@@ -18,7 +18,7 @@ class MusicianServiceImpl(@Autowired private val musicianRepository: MusicianRep
                 email = newMusician.email,
                 fullName = newMusician.fullName,
                 dateOfBirth = newMusician.dateOfBirth,
-                musicalInstruments = newMusician.musicalInstruments
+                musicalInstruments = newMusician.musicalInstruments ?: emptySet()
         )
 
         try {
